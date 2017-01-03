@@ -1,6 +1,9 @@
 var router = require('express').Router();
 var storeOrderSchema = require('../models/storeorder');
 var stProSchema = require('../models/storeproduct');
+var storeSchema = require('../models/store');
+var bill=require('../utilities/storebillPdf');
+var challan=require('../utilities/challanPdf');
 var moment = require('moment'); 
 var mongoose = require('mongoose');
 
@@ -36,7 +39,8 @@ router.route('/name')
     res.json({ success: false, message: 'Please enter store name.'});
   }
    else{  
-       storeOrderSchema.find({store_name:req.body.storename},function(err,data){
+     var str=req.body.storename.toUpperCase();
+       storeOrderSchema.find({store_name:str},function(err,data){
              if (err) {
                        console.error(JSON.stringify(err));
                        res.redirect('/');
@@ -59,8 +63,8 @@ router.route('/add')
          res.json({ success: false, message: 'Please enter storename and order .' });
   }else{
         var str =req.body.order;
-        var str =str.toLowerCase();
-        var myArray =str.split( ',');
+        var atr =str.toUpperCase();
+        var myArray =atr.split( ',');
         var check=0;
         var boolcheck; 
        
@@ -97,10 +101,12 @@ router.route('/add')
      Dates= D.format('YYYY-MM-DD');
     console.log(" Date "+Dates);
     }
+    var stornm=req.body.storename.toUpperCase();
      var newOrder = new storeOrderSchema({
-          store_name: req.body.storename,
+          store_name: stornm,
           date:Dates,
-          orders:orderss
+          orders:orderss,
+          origorder:str
       });
       newOrder.save(function(err,result) {
       if (err) {
@@ -126,8 +132,8 @@ router.route('/edit')
          res.json({ success: false, message: 'Please enter storename and order .' });
   }else{
        var str =req.body.order;
-       var str =str.toLowerCase();
-       var myArray =str.split( ',');
+       var atr =str.toUpperCase();
+       var myArray =atr.split( ',');
        var check=0;
        var boolcheck; 
        
@@ -164,10 +170,12 @@ router.route('/edit')
              Dates= D.format('YYYY-MM-DD');
              console.log(" Date "+Dates);
            }
+          var stornm=req.body.storename.toUpperCase();  
      var newOrder = {
-          store_name: req.body.storename,
+          store_name: stornm,
           date:Dates,
-          orders:orderss
+          orders:orderss,
+          origorder:str
       };
        var id=req.query.id;
       console.log(" id "+id);
@@ -233,7 +241,7 @@ else{
 });
 
 router.route('/genbill')
-  .post(function(req,res){
+  .get(function(req,res){
 
   var id=req.query.id;
   if(!req.query.id){
@@ -249,17 +257,80 @@ router.route('/genbill')
                         console.log("Old data "+data);
                         var newData= addprice(data);
                         console.log(" newData "+newData);
-                        res.send(newData);
+                       var date = new Date(newData.date);
+                      var dateStr=date.getDate()+'/'+(date.getMonth()+1) + '/'+date.getFullYear() ;  
+                      console.log(" date "+dateStr);
+                      var newadd=address(newData);
+                       console.log(" address "+newadd);
+                      var total=0;
+                      for(var i=0; i<newData.orders.length;i++)
+                          total=total+newData.orders[i].total;
+
+                      console.log(" total "+total);  
+                      var pdf=bill.billpdf(newData,newadd,dateStr,total); 
+                      pdf.pipe(res);
+                      pdf.end(); 
+
+    
+                     }
+            });    
+        }
+    });
+
+router.route('/genchallan')
+ .get(function(req,res){
+ var id=req.query.id;
+  if(!req.query.id){
+       res.json({ success: false, message: 'Please attach id.'});
+  }
+  else{
+     storeOrderSchema.findById(id,function(err,data){
+             if (err) {
+                    console.error(JSON.stringify(err));
+                  res.json({ success: false, message: 'Something went wrong.'});
+                }
+                else {
+                        console.log("Old data "+data);
+                        
+                       var date = new Date(data.date);
+                      var dateStr=date.getDate()+'/'+(date.getMonth()+1) + '/'+date.getFullYear() ;  
+                      console.log(" date "+dateStr);
+                      var newadd=address(data);
+                       console.log(" address "+newadd);
+                      var pdf=challan.billpdf(data,newadd,dateStr); 
+                      pdf.pipe(res);
+                      pdf.end(); 
+
+    
                      }
             });    
   }
-});
+
+ });
 
 
+function address(data)
+{
+  var address="No address Present";
+  storeSchema.find({store_name:data.store_name},function(err,data){
+             if (err) {
+                       console.error(JSON.stringify(err));
+                    
+                     }
+                else {
+                      console.log("data "+data[0].address);
+                      if(data.length>0)
+                    address=data[0].address;
+                      }
+            });
+              require('deasync').sleep(100);
+
+            return address;
+}
 
   function addprice(data)
   {
-     var i=0;
+     var i=0,total=0;
     while(i<data.orders.length){
             console.log("name  "+data.orders[i].vegetable);
             var query={pro_name:data.orders[i].vegetable};
@@ -272,10 +343,12 @@ router.route('/genbill')
                         if(result.length>0)
                         {
                         data.orders[i].price=result[0].price;
-                        console.log(" orders "+i+" "+data.orders[i].price);
+                        data.orders[i].total=(data.orders[i].price*data.orders[i].quantity);
+                        console.log(" orders "+i+" "+data.orders[i].total);
                     }else{
                          data.orders[i].price=0;
-                        console.log(" orders "+i+" "+data.orders[i].price);
+                         data.orders[i].total=(data.orders[i].price*data.orders[i].quantity);
+                        console.log(" orderswith 0 "+i+" "+data.orders[i].total);
                        }
                 }
             });

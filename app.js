@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var db = 'mongodb://localhost:27017/saral';
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(db);
 
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static('public'));
@@ -18,6 +18,10 @@ var stOrdRoute=  require('./src/routes/StoreOrd');
 var custOrdRoute= require('./src/routes/CustOrd');
 var csRoute= require('./src/routes/ComSheet');
 
+
+app.get('/',function(req,res) {
+    res.render('index.html');
+});
 app.use('/store',storeRoute);
 app.use('/customer',customerRoute);
 app.use('/custpro',custProRoute);

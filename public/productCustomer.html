@@ -1,0 +1,97 @@
+
+<html>
+<head>
+<title>SaralHai</title>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<nav class="green">
+   <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
+      <ul class="right hide-on-med-and-down">
+<!--               <li><a class="dropdown-button" href="#!" data-activates="new-order-dropdown">New Orders<i class="material-icons right">arrow_drop_down</i></a></li>
+ -->        <li><a class="dropdown-button" href="#!" data-activates="order-dropdown">Details<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="vegetablelist.html" class="dropdown-button" data-activates="product-dropdown" ><i class="material-icons right">arrow_drop_down</i>Vegetable Prices and List</a></li>
+      </ul>
+    </div>
+</nav>
+<ul id="order-dropdown" class="dropdown-content">
+  <li><a href="storeangular.html">Stores</a></li>
+  <li><a href="customerangular.html">Customers</a></li>
+</ul>
+<ul id="product-dropdown" class="dropdown-content">
+  <li><a href="productStoreview.html">For Stores</a></li>
+  <li><a href="productCustomerview.html">For Customers</a></li>
+</ul>
+<ul id="new-order-dropdown" class="dropdown-content">
+  <li><a href="addStoreOrder.html">For Stores</a></li>
+  <li><a href="addCustomerOrder.html">For Customers</a></li>
+</ul>
+</nav>
+
+
+<h4 class="center orange-text">Add Customer Product</h4>
+
+<div class="container">
+<div class="card-panel white col s6">
+<div class="row">
+
+ 
+<form action="" method="post">
+<div class="input-field col s12">
+  <input id="name" name="name" type="text" class="validate" required>
+  <label for="name">Product Name</label>
+ </div>
+
+<div class="input-field col s6">
+  <input id="price" name="price" type="number" class="validate">
+  <label for="price">Product Price</label>
+</div>
+
+<!-- <div class="input-field col s6">
+  <select name="unit" class="browser-default">
+    <option value="" disabled selected>Choose Unit</option>
+    <option value="Kg">Kg</option>
+    <option value="Unit">Unit</option>
+  </select>
+</div>
+ -->
+<div class="input-field col s12">
+<a class="waves-effect waves-light btn center orange" onclick="AddProduct()">Add Product</a>
+
+</div>
+</form>
+
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+  
+function AddProduct () {
+  var productName = document.getElementById('name').value;
+  var price = document.getElementById('price').value;
+var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      alert(this.responseText);
+    }
+  };
+  xhttp.open("POST", "https://saralapis-demo.herokuapp.com/custpro/add", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("productname="+productName+"&price="+price);
+}
+</script>
+
+
+<footer>
+  <div class="footer-copyright green">
+     <div class="container white-text center" style="padding: 10px; margin-top: 10px;">SaralHai © 2016 | All Rights Reserved
+     </div>
+  </div>
+</footer>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+</html>

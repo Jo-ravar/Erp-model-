@@ -22,8 +22,10 @@ router.route('/add')
   if(!req.body.productname || !req.body.price){
          res.json({ success: false, message: 'Please enter productname and price.' });
   }else{
+       var str= req.body.productname;  
+       str=str.toUpperCase();
       var newProduct = new  custProSchema({
-          pro_name: req.body.productname,
+          pro_name: str,
           price:req.body.price
       });
       newProduct.save(function(err,result) {
@@ -46,8 +48,10 @@ router.route('/edit')
     if(!req.body.productname || !req.body.price){
          res.json({ success: false, message: 'Please enter productname and price.' });
   }else{
+        var str= req.body.productname;  
+       str=str.toUpperCase();
       var newData={
-         pro_name: req.body.productname,
+         pro_name: str,
          price:req.body.price
       };
 

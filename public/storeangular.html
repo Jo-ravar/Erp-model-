@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SaralHai</title>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<nav class="green">
+	<div class="nav-wrapper">
+         <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
+      <ul class="right hide-on-med-and-down">
+<!--               <li><a class="dropdown-button" href="#!" data-activates="new-order-dropdown">New Orders<i class="material-icons right">arrow_drop_down</i></a></li>
+ -->        <li><a class="dropdown-button" href="#!" data-activates="order-dropdown">Details<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="vegetablelist.html" class="dropdown-button" data-activates="product-dropdown" ><i class="material-icons right">arrow_drop_down</i>Vegetable Prices and List</a></li>
+      </ul>
+    </div>
+</nav>
+<ul id="order-dropdown" class="dropdown-content">
+  <li><a href="storeangular.html">Stores</a></li>
+  <li><a href="customerangular.html">Customers</a></li>
+</ul>
+<ul id="product-dropdown" class="dropdown-content">
+  <li><a href="productStoreview.html">For Stores</a></li>
+  <li><a href="productCustomerview.html">For Customers</a></li>
+</ul>
+<ul id="new-order-dropdown" class="dropdown-content">
+  <li><a href="addStoreOrder.html">For Stores</a></li>
+  <li><a href="addCustomerOrder.html">For Customers</a></li>
+</ul>
+    </div>
+</nav>
+<ul class="tabs grey lighten-4">
+        <li class="tab" onclick="Overview()"><a href="index.html" style="color: orange;">Overview</a></li>
+        <li class="tab active"><a href="store.html" class="active">Stores</a></li>     
+         </ul>
+    </div>
+<div ng-app="myApsp" ng-controller="customersCtrl"> 
+
+<table class="bordered highlight striped">
+<tr>
+              <th data-field="id" class="red-text">Store Id</th>
+              <th data-field="name" class="red-text" >Store Name</th>
+              <th data-field="address" class="red-text">Store Address</th>
+              <th data-field="no." class="red-text">Store Number</th>
+              <th class="red-text">View</th>
+          </tr>
+  <tr ng-repeat="x in names">
+    <td>{{ x._id }}</td>
+    <td>{{ x.store_name }}</td>
+    <td>{{ x.address }}</td>
+    <td>{{ x.number }}</td>
+    <td> <a class="btn-floating btn-small green" ng-click="viewStoreIda(x._id, x.owner_name , x.store_name , x.address , x.number , x.email_id )" >
+      <i class="material-icons">menu</i>
+    </a></td>
+  </tr>
+</table>
+
+</div>
+
+
+<div class="fixed-action-btn horizontal" onclick="addStore()">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+
+
+
+<script type="text/javascript">
+  function addStore(){
+    window.location.href="addStore.html";
+  }
+  function Overview(){
+    window.location.href="index.html"
+  }
+  function viewStore(){
+    window.location.href="viewStore.html"
+  }
+</script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+ 	<script type="text/javascript" src="js/materialize.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="js/AppController.js"></script>
+</body>
+</html>

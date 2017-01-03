@@ -15,7 +15,28 @@ router.route('/')
                         res.send(data);
                 }
             });
-       })
+       });
+
+ router.route('/name')
+ .get(function (req,res){
+       customerSchema.find({},{cust_name:1, _id:0},function(err,data){
+             if (err) {
+                    console.error(JSON.stringify(err));
+                    res.redirect('/');
+                }
+                else {
+                      console.log("Customers Data Send ");
+                         var name=new Array();
+                      for (var i=0; i<data.length;i++)
+                      {
+                          name[i]=data[i].cust_name;
+                      }
+                        res.send(name);
+                }
+            });
+       });
+      
+       
 
 router.route('/add')
  .post(function(req,res){
@@ -23,10 +44,13 @@ router.route('/add')
   if(!req.body.customername || !req.body.email){
          res.json({ success: false, message: 'Please enter email and Customer Name.' });
   }else{
+      var namestr=req.body.customername.toUpperCase();
+      var addstr= req.body.address.toUpperCase();
+      var email=req.body.email.toLowerCase();
       var newCustomer = new customerSchema({
-          cust_name:req.body.customername,
-          email_id:req.body.email,
-          address:req.body.address,
+          cust_name:namestr,
+          email_id:email,
+          address:addstr,
           number:req.body.number
       });
       newCustomer.save(function(err,result) {
@@ -49,10 +73,13 @@ router.route('/edit')
      if(!req.body.customername || !req.body.email){
          res.json({ success: false, message: 'Please enter email and Store Name.' });
   }else{
+       var namestr=req.body.customername.toUpperCase();
+      var addstr= req.body.address.toUpperCase();
+      var email=req.body.email.toLowerCase();
       var newData={
-          cust_name:req.body.customername,
-          email_id:req.body.email,
-          address:req.body.address,
+          cust_name:namestr,
+          email_id:email,
+          address:addstr,
           number:req.body.number
       }; 
       var id=req.query.id;

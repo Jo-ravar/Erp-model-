@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>SaralHai</title>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<nav class="green">
+	<div class="nav-wrapper">
+      <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
+
+    </div>
+</nav>
+<div class="container" ng-app="myApsp" ng-controller="AddCustomer">
+        <h4 class="center orange-text">Add Customer</h4>
+ <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="customer_name" type="text" class="validate" ng-model="Customer.Name">
+          <label for="customer_name">Customer Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="customer_number" type="text" class="validate" ng-model="Customer.Number">
+          <label for="customer_number">Customer Number</label>
+        </div>
+      </div>
+        <div class="input-field col s6">
+          <input id="email" type="email" class="validate" ng-model="Email" ng-model="Customer.Email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="address" type="text" ng-model="Customer.Address">
+          <label for="address">Address</label>
+        </div>
+      </div>
+       <a class="waves-effect waves-light btn center orange" ng-click="addCustomer()">Add Customer</a>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="js/AppController.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<html>
+<head>
+	<title>SaralHai</title>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<nav class="green">
+	<div class="nav-wrapper">
+      <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
+    <ul class="right hide-on-med-and-down">
+<!--               <li><a class="dropdown-button" href="#!" data-activates="new-order-dropdown">New Orders<i class="material-icons right">arrow_drop_down</i></a></li>
+ -->        <li><a class="dropdown-button" href="#!" data-activates="order-dropdown">Details<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="vegetablelist.html"><i class="material-icons left">list</i>Vegetable Prices and List</a></li>
+      </ul>
+    </div>
+</nav>
+<ul id="order-dropdown" class="dropdown-content">
+  <li><a href="storeangular.html">Stores</a></li>
+  <li><a href="customerangular.html">Customers</a></li>
+</ul>
+
+<ul id="new-order-dropdown" class="dropdown-content">
+  <li><a href="addStoreOrder.html">For Stores</a></li>
+  <li><a href="addCustomerOrder.html">For Customers</a></li>
+</ul>
+<div class="container">
+        <h4 class="center orange-text">Add Store</h4>
+ <div class="row" ng-app="myApsp" ng-controller="AddStore">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="stores_name" type="text" class="validate" ng-model="Store.Name">
+          <label for="store_name">Store Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="store_number" type="text" class="validate" ng-model="Store.Number" >
+          <label for="store_number">Store Number</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="Owner" class="validate" ng-model="Store.Owner">
+          <label for="owner">Owner Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="email" type="email" class="validate" ng-model="Store.Email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="address" type="text" ng-model="Store.Address">
+          <label for="address">Address</label>
+        </div>
+      </div>
+      <p>{{Store}}</p>
+      <div class="row">
+      <a class="waves-effect waves-light btn center orange" ng-click="addStore()">Add Store</a>
+      </div>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="js/AppController.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+</html>

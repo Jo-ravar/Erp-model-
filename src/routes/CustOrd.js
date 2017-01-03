@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var custOrderSchema = require('../models/customerorder');
 var custProSchema = require('../models/custproduct');
+var customerSchema = require('../models/customer');
+var bill=require('../utilities/billPdf');
 var moment = require('moment'); 
 var mongoose = require('mongoose');
 
@@ -36,7 +38,8 @@ router.route('/name')
     res.json({ success: false, message: 'Please enter customer name.'});
   }
    else{  
-     custOrderSchema.find({cust_name:req.body.custname},function(err,data){
+     var custnm=req.body.custname.toUpperCase();
+     custOrderSchema.find({cust_name:custnm},function(err,data){
              if (err) {
                        console.error(JSON.stringify(err));
                       res.json({ success: false, message: 'Something went wrong.'});
@@ -59,8 +62,8 @@ router.route('/add')
          res.json({ success: false, message: 'Please enter customername and order .' });
   }else{
         var str =req.body.order;
-        var str =str.toLowerCase();
-        var myArray =str.split( ',');
+        var atr =str.toUpperCase();
+        var myArray =atr.split( ',');
         var check=0;
         var boolcheck; 
        
@@ -97,10 +100,13 @@ router.route('/add')
      Dates= D.format('YYYY-MM-DD');
     console.log(" Date "+Dates);
     }
+    var cn=req.body.custname.toUpperCase();
      var newOrder = new custOrderSchema({
-          cust_name: req.body.custname,
+          cust_name: cn,
           date:Dates,
-          orders:orderss
+          orders:orderss,
+          origorder:str
+
       });
       newOrder.save(function(err,result) {
       if (err) {
@@ -126,8 +132,8 @@ router.route('/edit')
          res.json({ success: false, message: 'Please enter customername and order .' });
   }else{
        var str =req.body.order;
-       var str =str.toLowerCase();
-       var myArray =str.split( ',');
+       var atr =str.toUpperCase();
+       var myArray =atr.split( ',');
        var check=0;
        var boolcheck; 
        
@@ -164,10 +170,12 @@ router.route('/edit')
              Dates= D.format('YYYY-MM-DD');
              console.log(" Date "+Dates);
            }
+            var cn=req.body.custname.toUpperCase();
      var newOrder = {
-          cust_name: req.body.custname,
+          cust_name: cn,
           date:Dates,
-          orders:orderss
+          orders:orderss,
+          origorder:str
       };
        var id=req.query.id;
       console.log(" id "+id);
@@ -233,7 +241,7 @@ else{
 });
 
 router.route('/genbill')
-  .post(function(req,res){
+  .get(function(req,res){
 
   var id=req.query.id;
   if(!req.query.id){
@@ -249,13 +257,43 @@ router.route('/genbill')
                         console.log("Old data "+data);
                         var newData= addprice(data);
                         console.log(" newData "+newData);
-                        res.send(newData);
+                       
+                      var date = new Date(newData.date);
+                      var dateStr=date.getDate()+'/'+(date.getMonth()+1) + '/'+date.getFullYear() ;  
+                      console.log(" date "+dateStr);
+                      var newadd=address(newData);
+                       console.log(" address "+newadd);
+                      var total=0;
+                      for(var i=0; i<newData.orders.length;i++)
+                          total=total+newData.orders[i].total;
+
+                      console.log(" total "+total);  
+                      var pdf=bill.billpdf(newData,newadd,dateStr,total); 
+                      pdf.pipe(res);
+                      pdf.end(); 
                      }
             });    
   }
 });
 
+function address(data)
+{
+  var address="No address Present";
+  customerSchema.find({cust_name:data.cust_name},function(err,data){
+             if (err) {
+                       console.error(JSON.stringify(err));
+                    
+                     }
+                else {
+                      console.log("data "+data[0].address);
+                      if(data.length>0)
+                    address=data[0].address;
+                      }
+            });
+              require('deasync').sleep(100);
 
+            return address;
+}
 
   function addprice(data)
   {
@@ -272,9 +310,11 @@ router.route('/genbill')
                         if(result.length>0)
                         {
                         data.orders[i].price=result[0].price;
+                        data.orders[i].total=(data.orders[i].price*data.orders[i].quantity);
                         console.log(" orders "+i+" "+data.orders[i].price);
                     }else{
                          data.orders[i].price=0;
+                        data.orders[i].total=(data.orders[i].price*data.orders[i].quantity);
                         console.log(" orders "+i+" "+data.orders[i].price);
                        }
                 }

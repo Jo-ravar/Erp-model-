@@ -5,7 +5,8 @@ var storeSchema = new Schema({
     number:Number,
     email_id:{type:String,required:true,unique:true},
     owner_name:String,
-    address:String
+    address:String,
+    store_id:Number
 
 });
 module.exports = mongoose.model('store',storeSchema);
