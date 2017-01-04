@@ -116,7 +116,9 @@ router.route('/add')
       else
       {  
           console.log("Insert Successful " + JSON.stringify(result));
-          res.json({ success: true, message: 'Successfully Placed new order.' });
+           var id = result._id;
+          console.log(" our id" +id);
+          res.send(id);
       }
     });
 
