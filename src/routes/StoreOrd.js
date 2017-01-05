@@ -320,7 +320,6 @@ function address(data)
                     
                      }
                 else {
-                      console.log("data "+data[0].address);
                       if(data.length>0)
                     address=data[0].address;
                       }
