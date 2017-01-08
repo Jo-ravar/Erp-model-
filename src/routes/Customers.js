@@ -56,7 +56,7 @@ router.route('/add')
       newCustomer.save(function(err,result) {
       if (err) {
          console.log("Error in insert " + JSON.stringify(err));
-        return res.json({ success: false, message: 'That email address or number already exists.'});
+        return res.json({ success: false, message: 'That customer already exists.'});
       }
       else
       {  
