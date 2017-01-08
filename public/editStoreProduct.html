@@ -107,7 +107,7 @@ xhttp.onreadystatechange = function() {
       alert(this.responseText);
     }
   };
-  xhttp.open("EDIT", "https://saralapis-demo.herokuapp.com/stpro/delete?id="+edited_customer_id, true);
+  xhttp.open("DELETE", "https://saralapis-demo.herokuapp.com/stpro/delete?id="+edited_customer_id, true);
   // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send();
 }
