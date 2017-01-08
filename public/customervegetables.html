@@ -5,7 +5,7 @@
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -44,44 +44,59 @@
   <li><a href="addStoreOrder.html">For Stores</a></li>
   <li><a href="addCustomerOrder.html">For Customers</a></li>
 </ul>
+<ul id="order-dropdown" class="dropdown-content">
+  <li><a href="storeangular.html">Stores</a></li>
+  <li><a href="customerangular.html">Customers</a></li>
+</ul>
+<ul id="product-dropdown" class="dropdown-content">
+  <li><a href="productStoreview.html">For Stores</a></li>
+  <li><a href="productCustomerview.html">For Customers</a></li>
+</ul>
+<ul id="new-order-dropdown" class="dropdown-content">
+  <li><a href="addStoreOrder.html">For Stores</a></li>
+  <li><a href="addCustomerOrder.html">For Customers</a></li>
+</ul>
+    </div>
+</nav>
 <ul class="tabs grey lighten-4">
+        <li onclick="window.location.href='customervegetables.html'" class="tab active" href="customervegetables.html" ><a href="customervegetables.html" class="active" style="color: orange;">Customer Vegetables</a></li>
+        <li onclick="window.location.href='storevegetables.html'"  class="tab" href="storevegetables.html" ><a href="storevegetables.html">Store Vegetables</a></li>     
          </ul>
     </div>
-<div ng-app="myApsp" ng-controller="CustomerCtrl"> 
+<div ng-app="myApsp" ng-controller="customervegetables"> 
+
+<div class="white">
+  <div class="row">
+        <div class="input-field col s12">
+        <div class="col s2">
+          <label for="OrderDates">Choose the Date</label>
+        </div>
+        <div class="col s4">
+          <input id="OrderDates" type="date" class="datepicker" ng-model="OrderDates">
+          </div>
+          <div class="col s6">
+          <a class="btn-floating center btn-large waves-effect waves-light red" ng-click="Submit()"><i class="material-icons">send</i></a>
+          </div>
+        </div>
+    </div>
+</div>
 
 <table class="bordered highlight striped">
 <tr>
-              <th data-field="name" class="red-text" >Customer Name</th>
-              <th data-field="address" class="red-text">Customer Address</th>
-              <th data-field="no." class="red-text">Customer Number</th>
-              <th class="red-text">View</th>
+              <th data-field="id" class="red-text">Vegetable Name</th>
+              <th data-field="name" class="red-text" >Packets</th>
           </tr>
   <tr ng-repeat="x in names">
-    <td>{{ x.cust_name }}</td>
-    <td>{{ x.address }}</td>
-    <td>{{ x.number }}</td>
-    <td> <a class="btn-floating btn-small green" ng-click="viewCustIda(x._id, x.cust_name , x.address , x.number , x.email_id )" >
-      <i class="material-icons">menu</i>
-    </a></td>
+    <td>{{ x._id }}</td>
+    <td>{{ x.packets }}</td>
   </tr>
 </table>
 
-
-
 </div>
-
-
-<div class="fixed-action-btn horizontal" onclick="addCustomer()">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">add</i>
-    </a>
-</div>
-
-
 
 <script type="text/javascript">
-  function addCustomer(){
-    window.location.href="addCustomer.html";
+  function addStore(){
+    window.location.href="addStore.html";
   }
   function Overview(){
     window.location.href="index.html"
@@ -92,6 +107,7 @@
 </script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
  	<script type="text/javascript" src="js/materialize.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="js/AppController.js"></script>
 </body>
 </html>

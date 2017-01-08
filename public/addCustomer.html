@@ -10,11 +10,39 @@
 </head>
 <body>
 <nav class="green">
-	<div class="nav-wrapper">
+  <div class="nav-wrapper">
       <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
-
+       <ul class="right hide-on-med-and-down">
+<!--               <li><a class="dropdown-button" href="#!" data-activates="new-order-dropdown">New Orders<i class="material-icons right">arrow_drop_down</i></a></li>
+ -->        <li><a class="dropdown-button" href="#!" data-activates="order-dropdown">Details<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="vegetablelist.html" class="dropdown-button" data-activates="product-dropdown" ><i class="material-icons right">arrow_drop_down</i>Vegetable Prices and List</a></li>
+        <li><a class="dropdown-button" data-activates="orderview-dropdown" ><i class="material-icons right">arrow_drop_down</i>Order</a></li>
+        <li><a class="dropdown-button" data-activates="compilation-dropdown" ><i class="material-icons right">arrow_drop_down</i>Compilation</a></li>
+      </ul>
     </div>
 </nav>
+<ul id="order-dropdown" class="dropdown-content">
+  <li><a href="storeangular.html">Stores</a></li>
+  <li><a href="customerangular.html">Customers</a></li>
+</ul>
+<ul id="orderview-dropdown" class="dropdown-content">
+  <li><a href="viewstoreOrders.html">Store Order</a></li>
+  <li><a href="customerOrderview.html">Customer Orders</a></li>
+  <li><a href="storevegetables.html">Store Vegetables</a></li>
+  <li><a href="customervegetables.html">Customer Vegetables</a></li>
+</ul>
+<ul id="product-dropdown" class="dropdown-content">
+  <li><a href="productStoreview.html">For Stores</a></li>
+  <li><a href="productCustomerview.html">For Customers</a></li>
+</ul>
+<ul id="compilation-dropdown" class="dropdown-content">
+  <li><a href="vegetablecompilation.html">For Stores</a></li>
+  <li><a href="customervegcompilation.html">For Customers</a></li>
+</ul>
+<ul id="new-order-dropdown" class="dropdown-content">
+  <li><a href="addStoreOrder.html">For Stores</a></li>
+  <li><a href="addCustomerOrder.html">For Customers</a></li>
+</ul>
 <div class="container" ng-app="myApsp" ng-controller="AddCustomer">
         <h4 class="center orange-text">Add Customer</h4>
  <div class="row">
@@ -30,7 +58,7 @@
         </div>
       </div>
         <div class="input-field col s6">
-          <input id="email" type="email" class="validate" ng-model="Email" ng-model="Customer.Email">
+          <input id="email" type="email" class="validate" ng-model="Customer.Email">
           <label for="email">Email</label>
         </div>
       </div>
@@ -40,6 +68,7 @@
           <label for="address">Address</label>
         </div>
       </div>
+      <p>{{Customer}}</p>
        <a class="waves-effect waves-light btn center orange" ng-click="addCustomer()">Add Customer</a>
       </div>
     </form>

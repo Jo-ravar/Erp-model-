@@ -14,12 +14,10 @@
 <nav class="green">
 	<div class="nav-wrapper">
       <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
-       <ul class="right hide-on-med-and-down">
+      <ul class="right hide-on-med-and-down">
 <!--               <li><a class="dropdown-button" href="#!" data-activates="new-order-dropdown">New Orders<i class="material-icons right">arrow_drop_down</i></a></li>
  -->        <li><a class="dropdown-button" href="#!" data-activates="order-dropdown">Details<i class="material-icons right">arrow_drop_down</i></a></li>
         <li><a href="vegetablelist.html" class="dropdown-button" data-activates="product-dropdown" ><i class="material-icons right">arrow_drop_down</i>Vegetable Prices and List</a></li>
-        <li><a class="dropdown-button" data-activates="orderview-dropdown" ><i class="material-icons right">arrow_drop_down</i>Order</a></li>
-        <li><a class="dropdown-button" data-activates="compilation-dropdown" ><i class="material-icons right">arrow_drop_down</i>Compilation</a></li>
       </ul>
     </div>
 </nav>
@@ -27,67 +25,51 @@
   <li><a href="storeangular.html">Stores</a></li>
   <li><a href="customerangular.html">Customers</a></li>
 </ul>
-<ul id="orderview-dropdown" class="dropdown-content">
-  <li><a href="viewstoreOrders.html">Store Order</a></li>
-  <li><a href="customerOrderview.html">Customer Orders</a></li>
-  <li><a href="storevegetables.html">Store Vegetables</a></li>
-  <li><a href="customervegetables.html">Customer Vegetables</a></li>
-</ul>
 <ul id="product-dropdown" class="dropdown-content">
   <li><a href="productStoreview.html">For Stores</a></li>
   <li><a href="productCustomerview.html">For Customers</a></li>
-</ul>
-<ul id="compilation-dropdown" class="dropdown-content">
-  <li><a href="vegetablecompilation.html">For Stores</a></li>
-  <li><a href="customervegcompilation.html">For Customers</a></li>
 </ul>
 <ul id="new-order-dropdown" class="dropdown-content">
   <li><a href="addStoreOrder.html">For Stores</a></li>
   <li><a href="addCustomerOrder.html">For Customers</a></li>
 </ul>
 
-<ul class="tabs grey lighten-4">
-        <li class="tab active"><a href="index.html" onclick="window.location.href='index.html'" style="color: orange;" class="active">Customer Order</a></li>
-        <li class="tab" href="addstoreorder.html" onclick="window.location.href='addstoreorder.html'"><a href="addstoreorder.html" style="color:orange">Store Order</a></li>
-      </ul>
+
     </div>
+
+      </div>
 <div class="container">
 	 <div class="col s12 m5">
         <div class="card-panel teal center">
-          <span class="white-text">Hello! ,from here you can add Customer Order.</span>
+          <span class="white-text">Hello! ,from here you can Edit Store Order.</span>
         </div>
       </div>
 	</div>
-
-<div class="container">
-<div class="card card-panel white col s6">
-<div class="row">
-	<div class="row" ng-app="myApsp" ng-controller="CustomerOrder">
+<div class="card">
+<div class="container" ng-app="myApsp" ng-controller="editStoreOrder">
+	<div class="row" >
+  <p>{{Store}}</p>
 	 <form class="col s12">
       <div class="row">
-        <div class="input-field col s8">
-          <input id="customer_name" type="text" ng-model="customer.customerName">
-          
+        <div class="input-field col s12">
+          <input id="customer_name" type="text" ng-model="name" >
         </div>
 		</div>
 		<div class="row">
-        <div class="input-field col s12">
-          <input id="customer_order_date" type="date" class="datepicker" ng-model="customer.customerOrderDate">
+        <div class="input-field col s6">
+          <input id="customer_order_date"  ng-model='dates'>
         </div>
 		</div>
  <div class="row">
           <div class="input-field col s12">
-            <textarea id="orderArea" class="materialize-textarea" ng-model="customer.orderArea"></textarea>
+            <textarea id="orderArea" class="materialize-textarea" ng-model='area'></textarea>
             <label for="orderArea">Order Area</label>
           </div>
-
 </div>
 <div class="row">
 <div class="input-field col s6">
-<p>{{customer}}</p>
-<button class="waves-effect waves-light btn orange" ng-click="submit()">Submit</button>	
-<button class="waves-effect waves-light btn green" style=" visibility: hidden; " ng-click="challan()">Print</button>	
-</div>
+<button class="waves-effect waves-light btn orange" id="edit" ng-click="Edit()" >Edit</button>	
+<button class="waves-effect waves-light btn red" ng-click="Delete()">Delete</button>	
 </div>
 </div>
 
@@ -96,28 +78,47 @@
 </form>
 </div>
 </div>
+</div>
 
 
 <script type="text/javascript">
-        originalOnload = window.onload;
+function Delete(){
+  var edited_customer_id = document.getElementById('Customer.customerID').value;
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      alert(this.responseText);
+    }
+  };
+  xhttp.open("EDIT", "https://saralapis-demo.herokuapp.com/stord/delete?id="+edited_customer_id, true);
+  // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+}
+</script>
+<script type="text/javascript">
+  originalOnload = window.onload;
 window.onload = function() {
   if (originalOnload) {
     originalOnload();
   }
-var options = {
-  url: "https://saralapis-demo.herokuapp.com/customer/name", 
+
+
+ var options = {
+  url: "https://saralapis-demo.herokuapp.com/store/name", 
 };
 
 $("#customer_name").easyAutocomplete(options);
         
 }
-
 </script>
+
+<!-- CSS file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="js/AppController.js"></script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
  	<script type="text/javascript" src="js/materialize.min.js"></script>
- 	  <script src="js/jquery.easy-autocomplete.min.js"></script> 
+  <script src="js/jquery.easy-autocomplete.min.js"></script> 
 
 </body>
 </html>

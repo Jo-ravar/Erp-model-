@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>SaralHai</title>
+  <title>SaralHai</title>
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -44,54 +44,47 @@
   <li><a href="addStoreOrder.html">For Stores</a></li>
   <li><a href="addCustomerOrder.html">For Customers</a></li>
 </ul>
-<ul class="tabs grey lighten-4">
-         </ul>
+<div ng-app="myApsp" ng-controller="viewcustOrders">
+<div class="white">
+  <div class="row">
+        <div class="input-field col s12">
+        <div class="col s2">
+          <label for="OrderDates">Choose the Date</label>
+        </div>
+        <div class="col s4">
+          <input id="OrderDates" type="date" class="datepicker" ng-model="OrderDates">
+          </div>
+          <div class="col s6">
+          <a class="btn-floating center btn-large waves-effect waves-light red" ng-click="Submit()"><i class="material-icons">send</i></a>
+          </div>
+        </div>
     </div>
-<div ng-app="myApsp" ng-controller="CustomerCtrl"> 
+</div>
 
-<table class="bordered highlight striped">
-<tr>
+   <table class="bordered highlight striped">
+          <tr>
+              
               <th data-field="name" class="red-text" >Customer Name</th>
-              <th data-field="address" class="red-text">Customer Address</th>
-              <th data-field="no." class="red-text">Customer Number</th>
-              <th class="red-text">View</th>
+              <th data-field="charge" class="red-text">Total Items</th>
+              <th data-field="Action" class="red-text">Action</th>
           </tr>
-  <tr ng-repeat="x in names">
+          <tr ng-repeat="x in names">
     <td>{{ x.cust_name }}</td>
-    <td>{{ x.address }}</td>
-    <td>{{ x.number }}</td>
-    <td> <a class="btn-floating btn-small green" ng-click="viewCustIda(x._id, x.cust_name , x.address , x.number , x.email_id )" >
-      <i class="material-icons">menu</i>
-    </a></td>
-  </tr>
-</table>
-
-
-
-</div>
-
-
-<div class="fixed-action-btn horizontal" onclick="addCustomer()">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">add</i>
+    <td>{{ x.orders.length }}</td>
+    <td> <a class="btn-floating btn-small red" ng-click="EditOrder(x._id , x.cust_name , x.origorder , x.date )">
+      <i class="material-icons">mode_edit</i>
+    </a> <a class="btn-floating btn-small green" ng-click="PrintBill(x._id)">
+      <i class="material-icons">receipt</i>
     </a>
-</div>
-
-
-
+    </td>
+        </table>
+        </div>
 <script type="text/javascript">
-  function addCustomer(){
-    window.location.href="addCustomer.html";
-  }
-  function Overview(){
-    window.location.href="index.html"
-  }
-  function viewStore(){
-    window.location.href="viewStore.html"
-  }
+  
 </script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
- 	<script type="text/javascript" src="js/materialize.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="js/AppController.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 </html>

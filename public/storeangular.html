@@ -11,12 +11,14 @@
 </head>
 <body>
 <nav class="green">
-	<div class="nav-wrapper">
-         <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
-      <ul class="right hide-on-med-and-down">
+  <div class="nav-wrapper">
+      <a href="#!" class="brand-logo"><i class="material-icons left">cloud</i>SaralHai</a>
+       <ul class="right hide-on-med-and-down">
 <!--               <li><a class="dropdown-button" href="#!" data-activates="new-order-dropdown">New Orders<i class="material-icons right">arrow_drop_down</i></a></li>
  -->        <li><a class="dropdown-button" href="#!" data-activates="order-dropdown">Details<i class="material-icons right">arrow_drop_down</i></a></li>
         <li><a href="vegetablelist.html" class="dropdown-button" data-activates="product-dropdown" ><i class="material-icons right">arrow_drop_down</i>Vegetable Prices and List</a></li>
+        <li><a class="dropdown-button" data-activates="orderview-dropdown" ><i class="material-icons right">arrow_drop_down</i>Order</a></li>
+        <li><a class="dropdown-button" data-activates="compilation-dropdown" ><i class="material-icons right">arrow_drop_down</i>Compilation</a></li>
       </ul>
     </div>
 </nav>
@@ -24,16 +26,24 @@
   <li><a href="storeangular.html">Stores</a></li>
   <li><a href="customerangular.html">Customers</a></li>
 </ul>
+<ul id="orderview-dropdown" class="dropdown-content">
+  <li><a href="viewstoreOrders.html">Store Order</a></li>
+  <li><a href="customerOrderview.html">Customer Orders</a></li>
+  <li><a href="storevegetables.html">Store Vegetables</a></li>
+  <li><a href="customervegetables.html">Customer Vegetables</a></li>
+</ul>
 <ul id="product-dropdown" class="dropdown-content">
   <li><a href="productStoreview.html">For Stores</a></li>
   <li><a href="productCustomerview.html">For Customers</a></li>
+</ul>
+<ul id="compilation-dropdown" class="dropdown-content">
+  <li><a href="vegetablecompilation.html">For Stores</a></li>
+  <li><a href="customervegcompilation.html">For Customers</a></li>
 </ul>
 <ul id="new-order-dropdown" class="dropdown-content">
   <li><a href="addStoreOrder.html">For Stores</a></li>
   <li><a href="addCustomerOrder.html">For Customers</a></li>
 </ul>
-    </div>
-</nav>
 <ul class="tabs grey lighten-4">
         <li class="tab" onclick="Overview()"><a href="index.html" style="color: orange;">Overview</a></li>
         <li class="tab active"><a href="store.html" class="active">Stores</a></li>     
