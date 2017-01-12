@@ -4,8 +4,10 @@ var arr = [];
  module.exports = {
  uniqueNumber: function() {
   var date =new Date();
-  var dateStr=date.getDate()+(date.getMonth()+1)+date.getFullYear() ;
-  dateStr=dateStr*200; 
+  var day=date.getDate();
+  var month=(date.getMonth()+1);
+  var year=date.getFullYear();
+  var dateStr=day*1000000000+month*10000000+year*1000;
   console.log(" datestr "+dateStr);
   while(1)
   {
