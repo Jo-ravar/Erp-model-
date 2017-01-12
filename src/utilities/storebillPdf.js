@@ -1,10 +1,13 @@
 var router = require('express').Router();
 var PDFDocument = require('pdfkit');
-var PdfTable = require('voilab-pdf-table');
+var PdfTable = require('voilab-pdf-table/voilab-table');
+var randnum=require('../utilities/randomnum');
 var fs=require('fs');
 
  module.exports = {
    billpdf : function(data,address,date,total){
+  var rand = randnum.uniqueNumber(data.date);    
+  console.log("randommuber "+rand); 
   var order=   [];
   for(var i=0; i<data.orders.length;i++)
   {
@@ -42,37 +45,45 @@ pdf.fontSize(30)
      pdf.fontSize(10)
    .text(date, 450, 190);
    pdf.fontSize(10)
-   .text('Email: ', 400, 210);
+   .text('Invoice no. :  ', 400, 210);
+     pdf.font('Helvetica-Bold')
+     .fontSize(10)
+   .text("  "+rand, 450, 210);
+   pdf.font('Times-Roman')
+   .fontSize(10)
+   .text('Email: ', 400, 230);
     pdf.fillColor('blue')
        .fontSize(10)
-        .text('info@saralhai.com ', 450, 210,{
+        .text('info@saralhai.com ', 450, 230,{
               underline:true
         });
  pdf.fillColor('black')
   pdf.fontSize(10)
-   .text('Website: ', 400, 230);
+   .text('Website: ', 400, 250);
     pdf.fillColor('blue')
        .fontSize(10)
-        .text('www.saralhai.com ', 450, 230,{
+        .text('www.saralhai.com ', 450, 250,{
               underline:true
         });
  pdf.fillColor('black')
 pdf.fontSize(10)
-   .text('Contact: ', 400, 250);
+   .text('Contact: ', 400, 270);
    pdf.fontSize(10)
-   .text('7047985752 ', 450, 250)
+   .text('7047985752 ', 450, 270)
     .moveDown(2.0);
-pdf.fontSize(13)
+pdf.fontSize(12)
             var table = new PdfTable(pdf, {
-                bottomMargin: 30
-            });
+                bottomMargin: 30,
+                moveDown:true,
+                autoFirstPage:true,
+                });
         table
             .addPlugin(new (require('voilab-pdf-table/plugins/fitcolumn'))({
                 column: 'description'
             }))
             .setColumnsDefaults({
                 headerBorder: 'B',
-                align: 'right'
+                align: 'right',
             })
             .addColumns([
             
@@ -80,12 +91,12 @@ pdf.fontSize(13)
                     id: "vegetable",
                     header: 'Description',
                     align:'left',
-                     width: 250
+                     width: 220
                 },
                 {
                     id: "quantity",
-                    header: 'Quantity(kg)',
-                    width: 70
+                    header: 'Quantity(kg/pc)',
+                    width: 80
                 },
                 {
                     id: 'price',
@@ -102,7 +113,7 @@ pdf.fontSize(13)
                 } 
                 
             ])
-           
+            
         table.addBody(order);
 
 pdf.moveDown(0.5);
