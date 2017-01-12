@@ -4,6 +4,7 @@ var stProSchema = require('../models/storeproduct');
 var storeSchema = require('../models/store');
 var bill=require('../utilities/storebillPdf');
 var challan=require('../utilities/challanPdf');
+var randnum=require('../utilities/randomnum');
 var moment = require('moment'); 
 var mongoose = require('mongoose');
 
@@ -102,11 +103,13 @@ router.route('/add')
     console.log(" Date "+Dates);
     }
     var stornm=req.body.storename.toUpperCase();
+     var rand = randnum.uniqueNumber();   
      var newOrder = new storeOrderSchema({
           store_name: stornm,
           date:Dates,
           orders:orderss,
-          origorder:str
+          origorder:str,
+          invoice:rand
       });
       newOrder.save(function(err,result) {
       if (err) {
@@ -269,11 +272,10 @@ router.route('/genbill')
                           total=total+newData.orders[i].total;
 
                       console.log(" total "+total);  
-                      var pdf=bill.billpdf(newData,newadd,dateStr,total); 
+                      var pdf=bill.billpdf(newData,newadd,dateStr,newData.invoice,total); 
                       pdf.pipe(res);
                       pdf.end(); 
 
-    
                      }
             });    
         }
@@ -299,7 +301,7 @@ router.route('/genchallan')
                       console.log(" date "+dateStr);
                       var newadd=address(data);
                        console.log(" address "+newadd);
-                      var pdf=challan.billpdf(data,newadd,dateStr); 
+                      var pdf=challan.billpdf(data,newadd,dateStr,data.invoice); 
                       pdf.pipe(res);
                       pdf.end(); 
 

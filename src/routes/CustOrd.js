@@ -3,6 +3,7 @@ var custOrderSchema = require('../models/customerorder');
 var custProSchema = require('../models/custproduct');
 var customerSchema = require('../models/customer');
 var bill=require('../utilities/billPdf');
+var randnum=require('../utilities/randomnum');
 var moment = require('moment'); 
 var mongoose = require('mongoose');
 
@@ -101,11 +102,13 @@ router.route('/add')
     console.log(" Date "+Dates);
     }
     var cn=req.body.custname.toUpperCase();
+     var rand = randnum.uniqueNumber();
      var newOrder = new custOrderSchema({
           cust_name: cn,
           date:Dates,
           orders:orderss,
-          origorder:str
+          origorder:str,
+          invoice:rand
 
       });
       newOrder.save(function(err,result) {
@@ -270,7 +273,7 @@ router.route('/genbill')
                           total=total+newData.orders[i].total;
 
                       console.log(" total "+total);  
-                      var pdf=bill.billpdf(newData,newadd,dateStr,total); 
+                      var pdf=bill.billpdf(newData,newadd,dateStr,newData.invoice,total); 
                       pdf.pipe(res);
                       pdf.end(); 
                      }

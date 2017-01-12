@@ -5,7 +5,7 @@ var arr = [];
  uniqueNumber: function() {
   var date =new Date();
   var dateStr=date.getDate()+(date.getMonth()+1)+date.getFullYear() ;
-  dateStr=dateStr+783; 
+  dateStr=dateStr*200; 
   console.log(" datestr "+dateStr);
   while(1)
   {

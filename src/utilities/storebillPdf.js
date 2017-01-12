@@ -1,13 +1,10 @@
 var router = require('express').Router();
 var PDFDocument = require('pdfkit');
 var PdfTable = require('voilab-pdf-table/voilab-table');
-var randnum=require('../utilities/randomnum');
 var fs=require('fs');
 
  module.exports = {
-   billpdf : function(data,address,date,total){
-  var rand = randnum.uniqueNumber(data.date);    
-  console.log("randommuber "+rand); 
+   billpdf : function(data,address,date,rand,total){
   var order=   [];
   for(var i=0; i<data.orders.length;i++)
   {
@@ -71,7 +68,7 @@ pdf.fontSize(10)
    pdf.fontSize(10)
    .text('7047985752 ', 450, 270)
     .moveDown(2.0);
-pdf.fontSize(12)
+pdf.fontSize(11)
             var table = new PdfTable(pdf, {
                 bottomMargin: 30,
                 moveDown:true,

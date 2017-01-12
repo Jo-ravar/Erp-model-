@@ -6,6 +6,7 @@ var storeOrderSchema = new Schema({
     store_name:{type:String, required:true},
     date :{type:Date ,default:moment(new Date()).format('YYYY-MM-DD')},
     origorder:{type:String, required:true},
+    invoice:{type:String, required:true},
     orders : [{
     vegetable : String,
     quantity : Number,
