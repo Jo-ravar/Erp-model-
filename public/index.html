@@ -105,7 +105,13 @@ window.onload = function() {
     originalOnload();
   }
 var options = {
-  url: "https://saralapis-demo.herokuapp.com/customer/name", 
+  url: "https://saralapis-demo.herokuapp.com/customer/", 
+  getValue : "cust_name"
+    list : {
+      match: {
+        enabled: true,
+      }  
+    }
 };
 
 $("#customer_name").easyAutocomplete(options);

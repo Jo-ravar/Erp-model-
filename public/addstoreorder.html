@@ -139,12 +139,19 @@ window.onload = function() {
   //           $( "#automplete-1" ).autocomplete(datasource);
 
             var options = {
-  url: "https://saralapis-demo.herokuapp.com/store/name", 
-};
+  url: "https://saralapis-demo.herokuapp.com/store/", 
+  getValue : "store_name",
+  list : {
+      match: {
+        enabled: true,
+      }  
+    }
+  }
+
 
 $("#customer_name").easyAutocomplete(options);
         
-}
+};
 </script>
 
 <!-- CSS file -->
