@@ -335,7 +335,10 @@ app.controller('editStoreOrder', function($scope,$http,$filter){
   console.log($scope.id);
   var name =   getQuerystring('store_name');
     $scope.name = decodeURIComponent(name);
-  $scope.area = getQuerystring('orderstring');
+
+  var orderdata = getQuerystring('orderstring');
+    $scope.area = orderdata.replace(/%20/g, " ");
+
   $scope.datass = getQuerystring('date');
     var finaldate = $scope.datass.substr(0, $scope.datass.indexOf('T'));
   $scope.dates = finaldate;
@@ -428,7 +431,10 @@ app.controller('editcustOrder', function($scope,$http,$filter){
     var name =   getQuerystring('store_name');
     $scope.name = decodeURIComponent(name);
   console.log($scope.name);
-  $scope.area = getQuerystring('orderstring');
+
+  var orderdata = getQuerystring('orderstring');
+    $scope.area = orderdata.replace(/%20/g, " ")
+
   $scope.datass = getQuerystring('date');
     var finaldate = $scope.datass.substr(0, $scope.datass.indexOf('T'));
   $scope.dates = finaldate;
