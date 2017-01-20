@@ -19,12 +19,17 @@
         <li><a href="vegetablelist.html" class="dropdown-button" data-activates="product-dropdown" ><i class="material-icons right">arrow_drop_down</i>Vegetable Prices and List</a></li>
         <li><a class="dropdown-button" data-activates="orderview-dropdown" ><i class="material-icons right">arrow_drop_down</i>Order</a></li>
         <li><a class="dropdown-button" data-activates="compilation-dropdown" ><i class="material-icons right">arrow_drop_down</i>Compilation</a></li>
+        <li><a class="dropdown-button" data-activates="new-order-dropdown" ><i class="material-icons right">arrow_drop_down</i>Add Order</a></li>
       </ul>
     </div>
 </nav>
 <ul id="order-dropdown" class="dropdown-content">
   <li><a href="storeangular.html">Stores</a></li>
   <li><a href="customerangular.html">Customers</a></li>
+</ul>
+<ul id="new-order-dropdown" class="dropdown-content">
+  <li><a href="index.html">For Customer</a></li>
+  <li><a href="addstoreorder.html">For Stores</a></li>
 </ul>
 <ul id="orderview-dropdown" class="dropdown-content">
   <li><a href="viewstoreOrders.html">Store Order</a></li>
@@ -40,10 +45,6 @@
   <li><a href="vegetablecompilation.html">For Stores</a></li>
   <li><a href="customervegcompilation.html">For Customers</a></li>
 </ul>
-<ul id="new-order-dropdown" class="dropdown-content">
-  <li><a href="addStoreOrder.html">For Stores</a></li>
-  <li><a href="addCustomerOrder.html">For Customers</a></li>
-</ul>
 <div ng-app="myApsp" ng-controller="viewstoreOrders">
 <div class="white">
   <div class="row">
@@ -54,8 +55,10 @@
         <div class="col s4">
           <input id="OrderDates" type="date" class="datepicker" ng-model="OrderDates">
           </div>
-          <div class="col s6">
+          <div class="col s5">
           <a class="btn-floating center btn-large waves-effect waves-light red" ng-click="Submit()"><i class="material-icons">send</i></a>
+                 <a class="waves-effect waves-light btn orange" id="allbill" ng-click="allbill()">All Bills</a>
+                  <a class="waves-effect waves-light btn blue" id="allChallan" ng-click="allChallan()">All Chaalan</a>
           </div>
         </div>
     </div>
@@ -71,10 +74,15 @@
           <tr ng-repeat="x in names">
     <td>{{ x.store_name }}</td>
     <td>{{ x.orders.length }}</td>
-    <td> <a class="btn-floating btn-small red" ng-click="EditOrder(x._id , x.store_name , x.origorder , x.date )">
+    <td> <a class="btn-floating btn-small orange" ng-click="EditOrder(x._id , x.store_name , x.origorder , x.date )">
       <i class="material-icons">mode_edit</i>
     </a> <a class="btn-floating btn-small green" ng-click="PrintBill(x._id)">
       <i class="material-icons">receipt</i>
+      </a> <a class="btn-floating btn-small purple" ng-click="PrintChallan(x._id)">
+      <i class="material-icons">subtitles</i>
+    </a>
+    </a> <a class="btn-floating btn-small red" ng-click="Delete(x._id)">
+      <i class="material-icons">delete</i>
     </a>
     </td>
         </table>

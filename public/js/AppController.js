@@ -278,8 +278,6 @@ app.controller('viewcustOrders', function($scope,$http,$filter){
         }
 
     });
-
-
 }
 });
 
@@ -306,6 +304,19 @@ app.controller('viewstoreOrders', function($scope,$http,$filter){
     });
 }
 
+$scope.allbill = function(){
+    $scope.OrderDates = $filter('date')($scope.OrderDates, "yyyy-MM-dd");
+    var win = window.open('https://saralapis-demo.herokuapp.com/Stord/allstbill?date='+$scope.OrderDates, '_blank');
+    win.focus();
+}
+
+$scope.allChallan = function(){
+    $scope.OrderDates = $filter('date')($scope.OrderDates, "yyyy-MM-dd");
+    var win = window.open('https://saralapis-demo.herokuapp.com/stord/allchallan?date='+$scope.OrderDates, '_blank');
+    win.focus();
+}
+
+
 $scope.EditOrder = function(id,storename,orderstring,date){
     console.log("StoreName ="+storename);
     window.location ="editstoreOrder.html"+"?ID="+id+"&store_name="+storename+"&orderstring="+orderstring+"&date="+date;
@@ -316,7 +327,24 @@ $scope.PrintBill = function(id){
     win.focus();
 }
 
+$scope.PrintChallan = function(id){
+    var win = window.open('https://saralapis-demo.herokuapp.com/stord/genchallan?id='+id, '_blank');
+    win.focus();
+}
+
+$scope.Delete = function(id){
+     $http({
+        method : 'DELETE',
+        url: 'https://saralapis-demo.herokuapp.com/stord/delete?id='+id,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function (data){
+        window.alert(""+data.message);
+        console.log(data);
+    });
+    // window.location.href = 'index.html';
+}
 });
+
 
 app.controller('editStoreOrder', function($scope,$http,$filter){
     
@@ -337,7 +365,9 @@ app.controller('editStoreOrder', function($scope,$http,$filter){
     $scope.name = decodeURIComponent(name);
 
   var orderdata = getQuerystring('orderstring');
-    $scope.area = orderdata.replace(/%20/g, " ");
+    $scope.area = unescape(orderdata);
+
+    console.log($scope.area);
 
   $scope.datass = getQuerystring('date');
     var finaldate = $scope.datass.substr(0, $scope.datass.indexOf('T'));
@@ -412,6 +442,26 @@ $scope.PrintBill = function(id){
     win.focus();
 }
 
+$scope.Delete = function(id){
+     $http({
+        method : 'DELETE',
+        url: 'https://saralapis-demo.herokuapp.com/custord/delete?id='+id,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function (data){
+        window.alert(""+data.message);
+        console.log(data);
+    });
+    // window.location.href = 'index.html';
+}
+$scope.Allbill = function(){
+    $scope.OrderDates = $filter('date')($scope.OrderDates, "yyyy-MM-dd");
+    var win = window.open('https://saralapis-demo.herokuapp.com/custord/allcustbill?date='+$scope.OrderDates, '_blank');
+    win.focus();
+}
+
+
+
+
 });
 app.controller('editcustOrder', function($scope,$http,$filter){
     
@@ -431,9 +481,8 @@ app.controller('editcustOrder', function($scope,$http,$filter){
     var name =   getQuerystring('store_name');
     $scope.name = decodeURIComponent(name);
   console.log($scope.name);
-
-  var orderdata = getQuerystring('orderstring');
-    $scope.area = orderdata.replace(/%20/g, " ")
+ var orderdata = getQuerystring('orderstring');
+    $scope.area = unescape(orderdata);
 
   $scope.datass = getQuerystring('date');
     var finaldate = $scope.datass.substr(0, $scope.datass.indexOf('T'));
