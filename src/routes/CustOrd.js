@@ -3,6 +3,7 @@ var custOrderSchema = require('../models/customerorder');
 var custProSchema = require('../models/custproduct');
 var customerSchema = require('../models/customer');
 var bill=require('../utilities/billPdf');
+var allbill=require('../utilities/allCustBill');
 var randnum=require('../utilities/randomnum');
 var moment = require('moment'); 
 var mongoose = require('mongoose');
@@ -281,6 +282,67 @@ router.route('/genbill')
   }
 });
 
+router.route('/allcustbill')
+.get(function(req,res){
+if(!req.query.date)
+  {
+    res.json({ success: false, message: 'Please enter date.'});
+  }else{
+       var id = getallid(req.query.date);
+    if(id===null)
+    {
+       res.json({  message: 'NO ORDERS PRESENT'});
+    }else
+    {
+     var multidata=[];
+     var multinewadd=[];
+     var multidatesr=[];
+     var multiinvoice=[]; 
+     var multitotal=[];
+      for(var i=0; i<id.length;i++)
+      {
+        custOrderSchema.findById(id[i],function(err,data){
+             if (err) {
+                    console.error(JSON.stringify(err));
+                  res.json({ success: false, message: 'Something went wrong.'});
+                }
+                else {
+                        console.log("Old data "+data);
+                        var newData= addprice(data);
+                        console.log(" newData "+newData);
+                       var date = new Date(newData.date);
+                      var dateStr=date.getDate()+'/'+(date.getMonth()+1) + '/'+date.getFullYear() ;  
+                      console.log(" date "+dateStr);
+                      var newadd=address(newData);
+                       console.log(" address "+newadd);
+                      var total=0;
+                      for(var i=0; i<newData.orders.length;i++)
+                          total=total+newData.orders[i].total;
+
+                      console.log(" total "+total);  
+
+                      multidata.push(newData);
+                      multinewadd.push(newadd);
+                      multidatesr.push(dateStr);
+                      multiinvoice.push(newData.invoice);
+                      multitotal.push(total);
+
+                     }
+            }); 
+              require('deasync').sleep(100);   
+      }
+      console.log("ABOUT TO SEND "+multidata.length);
+       var newpdf=allbill.billpdf(multidata,multinewadd,multidatesr,multiinvoice,multitotal); 
+        newpdf.pipe(res);
+        newpdf.end(); 
+    }
+
+  }
+
+});
+
+
+/******FUNCTIONS****************/
 function address(data)
 {
   var address="No address Present";
@@ -297,6 +359,39 @@ function address(data)
               require('deasync').sleep(100);
 
             return address;
+}
+
+function getallid(date)
+{
+       var dataid ; 
+       var D= moment(date);
+      var Des= Date.parse(D.format('YYYY-MM-DD'));
+      var dates=new Date(Des).toISOString();
+      console.log(" Date "+dates);
+       custOrderSchema.find({date:dates},function(err,data){
+      if (err) {
+                console.error(JSON.stringify(err));
+                }
+                else {
+                console.log("GOT ALL IDS DATA ");
+                 dataid=data;
+                }
+      });
+          require('deasync').sleep(100);
+       var id =[];
+      if(dataid)
+      {
+       
+       for(var i=0; i<dataid.length;i++)
+        {
+         id.push(dataid[i]._id);
+        }
+      }
+      else
+      {
+         id =null;
+      }
+        return id;
 }
 
   function addprice(data)
