@@ -42,8 +42,7 @@ pdf.fontSize(30)
    .text(date, 450, 190);
     pdf.fontSize(10)
    .text('Invoice no. :  ', 400, 210);
-     pdf.font('Helvetica-Bold')
-     .fontSize(10)
+     pdf.fontSize(10)
    .text("  "+rand, 450, 210);
    pdf.font('Times-Roman')
    .fontSize(10)
@@ -101,8 +100,8 @@ pdf.fontSize(12)
 pdf.moveDown(1.5);
 var y= pdf.y;
 pdf.font('Times-Italic')
-.fontSize(15)
-.text("Happy Ordering!",250,y);
+.fontSize(12)
+.text("Thank You for Your Business!",250,y);
 
    return pdf;
 }
