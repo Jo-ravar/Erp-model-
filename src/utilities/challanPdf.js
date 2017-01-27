@@ -12,6 +12,7 @@ var fs=require('fs');
       order.push({
             "vegetable":String(data.orders[i].vegetable),
              "quantity":Number(data.orders[i].quantity).toFixed(2),
+             "sno":Number(i+1)
           });
   }
 console.log( "Array "+order);
@@ -79,12 +80,19 @@ pdf.fontSize(12)
                 align: 'right'
             })
             .addColumns([
+                {
+                    id: "sno",
+                    header: 'S.NO',
+                    align:'left', 
+                    width: 50
+
+                },
             
                  {
                     id: "vegetable",
                     header: 'Description',
                     align:'left',
-                     width: 350
+                     width: 200
                 },
                 {
                     id: "quantity",

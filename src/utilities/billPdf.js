@@ -13,6 +13,7 @@ var fs=require('fs');
              "quantity":Number(data.orders[i].quantity).toFixed(2),
              "price":Number(data.orders[i].price).toFixed(2),
              "total":Number(data.orders[i].total).toFixed(2),
+              "sno":Number(i+1)
           });
   }
 console.log( "Array "+order);
@@ -77,12 +78,19 @@ pdf.fontSize(11)
                 align: 'right'
             })
             .addColumns([
+                 {
+                    id: "sno",
+                    header: 'S.NO',
+                    align:'left', 
+                    width: 50
+
+                },
             
                  {
                     id: "vegetable",
                     header: 'Description',
                     align:'left',
-                     width: 220
+                     width: 200
                 },
                 {
                     id: "quantity",
