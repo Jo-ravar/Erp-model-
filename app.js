@@ -2,9 +2,9 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var db = 'mongodb://localhost:27017/saral';
-//mongoose.connect(db);
-mongoose.connect(process.env.MONGODB_URI);
+var db = 'mongodb://Saralhai:Saralhai@ec2-54-167-177-140.compute-1.amazonaws.com:27017/saral';
+mongoose.connect(db);
+//mongoose.connect(process.env.MONGODB_URI);
 
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static('public'));
