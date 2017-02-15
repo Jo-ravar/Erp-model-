@@ -3,7 +3,7 @@
 #Description
 This erp-model is bascially a MEAN STACK application developed for an Indian startup saralhai which allows them to track the daily orders and requirement of resourses.
 Model also provide a monthly compilation sheet to analysis the growth of business in market.
-You can view the demo of website on https://saralapis-demo.herokuapp.com/
+
 
 
 #Requirement 
